@@ -1,25 +1,185 @@
 fileFormatVersion: 2
 guid: 26441ff2557dcfe48bf7395e44d91184
 ModelImporter:
-  serializedVersion: 18
+  serializedVersion: 22
   fileIDToRecycleName:
+    100000: c_ashi_l
+    100002: c_ashi_r
+    100004: c_dou_00
+    100006: c_hiji_l
+    100008: c_hiji_r
+    100010: c_kami_01
+    100012: c_kami_02
+    100014: c_kami_03
+    100016: c_kao_01
+    100018: c_kao_02
+    100020: c_kata_l
+    100022: c_kata_r
+    100024: c_katana
+    100026: c_loc_katana
+    100028: c_loc_saya
+    100030: c_momo_l
+    100032: c_momo_r
+    100034: c_moto_00
+    100036: c_saya
+    100038: c_te_l
+    100040: c_te_r
+    100042: chibi
+    100044: dekaino
+    100046: dou_00
+    100048: f_ashi_l_01
+    100050: f_ashi_l_02
+    100052: f_ashi_l_03
+    100054: f_ashi_r_01
+    100056: f_ashi_r_02
+    100058: f_ashi_r_03
+    100060: f_taiya_l_01
+    100062: f_taiya_r_01
+    100064: face
+    100066: hata
+    100068: hiji_l
+    100070: hiji_r
+    100072: kata_l
+    100074: kata_r
+    100076: katana_l_00
+    100078: katana_l_01
+    100080: katana_r_00
+    100082: katana_r_01
+    100084: loc_hata
+    100086: loc_katana_l
+    100088: loc_katana_r
+    100090: loc_saya_l
+    100092: loc_saya_r
+    100094: moto_00
+    100096: r_ashi_01
+    100098: r_ashi_02
+    100100: r_ashi_03
+    100102: r_taiya
+    100104: samurai_chibi_00
+    100106: samurai_deka_00
+    100108: saya_l
+    100110: saya_r
+    100112: te_l
+    100114: te_r
+    100116: //RootNode
+    400000: c_ashi_l
+    400002: c_ashi_r
+    400004: c_dou_00
+    400006: c_hiji_l
+    400008: c_hiji_r
+    400010: c_kami_01
+    400012: c_kami_02
+    400014: c_kami_03
+    400016: c_kao_01
+    400018: c_kao_02
+    400020: c_kata_l
+    400022: c_kata_r
+    400024: c_katana
+    400026: c_loc_katana
+    400028: c_loc_saya
+    400030: c_momo_l
+    400032: c_momo_r
+    400034: c_moto_00
+    400036: c_saya
+    400038: c_te_l
+    400040: c_te_r
+    400042: chibi
+    400044: dekaino
+    400046: dou_00
+    400048: f_ashi_l_01
+    400050: f_ashi_l_02
+    400052: f_ashi_l_03
+    400054: f_ashi_r_01
+    400056: f_ashi_r_02
+    400058: f_ashi_r_03
+    400060: f_taiya_l_01
+    400062: f_taiya_r_01
+    400064: face
+    400066: hata
+    400068: hiji_l
+    400070: hiji_r
+    400072: kata_l
+    400074: kata_r
+    400076: katana_l_00
+    400078: katana_l_01
+    400080: katana_r_00
+    400082: katana_r_01
+    400084: loc_hata
+    400086: loc_katana_l
+    400088: loc_katana_r
+    400090: loc_saya_l
+    400092: loc_saya_r
+    400094: moto_00
+    400096: r_ashi_01
+    400098: r_ashi_02
+    400100: r_ashi_03
+    400102: r_taiya
+    400104: samurai_chibi_00
+    400106: samurai_deka_00
+    400108: saya_l
+    400110: saya_r
+    400112: te_l
+    400114: te_r
+    400116: //RootNode
     4300000: dekaino
     4300002: chibi
+    7400000: P_run
+    7400002: P_attack_R
+    7400004: P_attack_L
+    7400006: P_yarare
+    7400008: P_stop
+    7400010: P_attack_Rot_s
+    7400012: P_attack_Rot
+    7400014: P_attack_Rot_e
+    11100000: //RootNode
+    13700000: chibi
+    13700002: dekaino
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: chibi1
+    second: {fileID: 2100000, guid: cce6ded4d68597541ac09e5c04bb30ad, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: samurai01
+    second: {fileID: 2100000, guid: 4b2bc584c8aafb1419b08aa9ceedec96, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: samurai02
+    second: {fileID: 2100000, guid: efc70d3740e99be4c9d75518a19a7bef, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: samurai03
+    second: {fileID: 2100000, guid: e8eb27d7acf183e4183ec245a18d98ce, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
+    resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
     animationCompression: 1
-    animationRotationError: .5
-    animationPositionError: .5
-    animationScaleError: .5
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
+    extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
       name: P_run
@@ -31,6 +191,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 1
+      hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -47,6 +208,7 @@ ModelImporter:
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: P_attack_R
       takeName: 
@@ -57,6 +219,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -73,6 +236,7 @@ ModelImporter:
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: P_attack_L
       takeName: 
@@ -83,6 +247,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -99,6 +264,7 @@ ModelImporter:
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: P_yarare
       takeName: 
@@ -109,6 +275,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -125,6 +292,7 @@ ModelImporter:
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: P_stop
       takeName: 
@@ -135,6 +303,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -151,6 +320,7 @@ ModelImporter:
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: P_attack_Rot_s
       takeName: 
@@ -161,6 +331,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -177,6 +348,7 @@ ModelImporter:
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: P_attack_Rot
       takeName: 
@@ -187,6 +359,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -203,6 +376,7 @@ ModelImporter:
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     - serializedVersion: 16
       name: P_attack_Rot_e
       takeName: 
@@ -213,6 +387,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+      hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
@@ -229,13 +404,17 @@ ModelImporter:
       transformMask: []
       maskType: 0
       maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    importVisibility: 0
     importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -249,24 +428,30 @@ ModelImporter:
     useFileScale: 0
   tangentSpace:
     normalSmoothAngle: 60
-    splitTangentsAcrossUV: 1
     normalImportMode: 0
-    tangentImportMode: 1
+    tangentImportMode: 4
+    normalCalculationMode: 0
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
+    serializedVersion: 2
     human: []
     skeleton: []
-    armTwist: .5
-    foreArmTwist: .5
-    upperLegTwist: .5
-    legTwist: .5
-    armStretch: .0500000007
-    legStretch: .0500000007
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 1
+  humanoidOversampling: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

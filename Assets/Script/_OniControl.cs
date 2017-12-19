@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class _OniControl : MonoBehaviour {
 
-    public Animation charaAnimation;                   // 动画
+    public Animation charaAnimation;    // 动画
+    public AudioClip[] yarare;          // 惨叫音频数组
 
     /// <summary>
     /// 怪物状态
@@ -36,7 +37,7 @@ public class _OniControl : MonoBehaviour {
                 Wave();
                 break;
             case STATE.DEFEATED:
-                GetComponent<Rigidbody>().AddForce(2 * 9.8f * Vector3.down);    // 施加双倍重力，防止怪物的下落看起来轻飘飘的
+                //GetComponent<Rigidbody>().AddForce(2 * 9.8f * Vector3.down);    // 施加双倍重力，防止怪物的下落看起来轻飘飘的
                 break;
         }
     }
@@ -98,7 +99,13 @@ public class _OniControl : MonoBehaviour {
     public void OnAttack(Vector3 speed)
     {
         state = STATE.DEFEATED;
-        charaAnimation.Play("oni_yarare");
+        GetComponent<Rigidbody>().useGravity = true;
+        charaAnimation.Play("oni_yarare");  // 击飞动画
+        // 播放惨叫音效
+        //int index = Random.Range(0, yarare.Length);
+        //GetComponent<AudioSource>().clip = yarare[index];
+        //GetComponent<AudioSource>().Play();
+
         GetComponent<Rigidbody>().velocity = speed;
         GetComponent<Rigidbody>().rotation = Quaternion.AngleAxis(90, Vector3.up) * Quaternion.LookRotation(speed); // 让怪物先朝向z轴，再旋转至速度方向
         GetComponent<Rigidbody>().angularVelocity = Vector3.Cross(Vector3.up, speed).normalized * Mathf.PI * 10.0f;

@@ -118,8 +118,9 @@ MonoBehaviour:
   isDecelerate: 0
   minSpeed: 5
   maxSpeed: 30
-  speedDamp: 5
+  speedUpDamp: 5
+  speedCutDamp: 3
   distanceSpeedUp: 4
-  distanceSpeedDown: 7
+  distanceSpeedCut: 7
   waveSpeed: 2
   state: 0

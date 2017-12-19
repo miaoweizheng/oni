@@ -15,11 +15,12 @@ public class _OniGroupControl : MonoBehaviour {
     public float minSpeed = 5.0f;               // 最小速度
     public float maxSpeed = 30.0f;              // 最大速度
     private float leaveSpeed = 15.0f;           // 离场速度
-    public float speedDamp = 5.0f;              // 加速度
+    public float speedUpDamp = 5.0f;            // 加速速度
+    public float speedCutDamp = 3.0f;           // 减速速度
     public float distanceSpeedUp=4.0f;          // 加速距离
-    public float distanceSpeedDown = 7.0f;      // 减速距离
+    public float distanceSpeedCut = 7.0f;      // 减速距离
 
-    public float waveSpeed = 2.0f;              // 左右移动速度
+    public float waveSpeed = 3.0f;              // 左右移动速度
 
     // 状态
     public enum STATE {
@@ -49,11 +50,11 @@ public class _OniGroupControl : MonoBehaviour {
         {
             // 加速
             case STATE.SPEEDUP:
-                runSpeed = Mathf.Lerp(runSpeed, maxSpeed, speedDamp * Time.deltaTime);
+                runSpeed = Mathf.Lerp(runSpeed, maxSpeed, speedUpDamp * Time.deltaTime);
                 break;
             // 减速
             case STATE.SPEEDCUT:
-                runSpeed = Mathf.Lerp(runSpeed, minSpeed, speedDamp * Time.deltaTime);
+                runSpeed = Mathf.Lerp(runSpeed, minSpeed, speedCutDamp * Time.deltaTime);
                 break;
             // 离场
             case STATE.LEAVE:
@@ -133,7 +134,7 @@ public class _OniGroupControl : MonoBehaviour {
             SetOnisMotionState(2);
         }
         // 当远离角色时减速
-        else if(state == STATE.SPEEDUP && transform.position.x > Player.transform.position.x + distanceSpeedDown)
+        else if(state == STATE.SPEEDUP && transform.position.x > Player.transform.position.x + distanceSpeedCut)
         {
             state = STATE.SPEEDCUT;
             SetOnisMotionState(1);
@@ -173,28 +174,37 @@ public class _OniGroupControl : MonoBehaviour {
 
         runSpeed = playerControl.runSpeed;  // 固定编队在屏幕的位置
 
-        // 设置整体击飞速度
-        Vector3 baseSpeed=Vector3.zero; // 基础速读
+        // 设置击飞速度,以圆锥型状发散发射出去
+        float groupSpeed = 0.0f;    // 整体速度
+        float groupAngle = 0.0f;    // 整体发射角度
+        float randSpeed = 0.0f;     // 散开速度
+        float randAngle = 0.0f;     // 散开角度
         if (gameControl.evaluation== _GameControl.EVALUATION.OKAY)
         {
-            baseSpeed = new Vector3(-4, 8, 0);
+            groupSpeed = 10.0f;
+            groupAngle = 20.0f;
+            randSpeed = 2.0f;
         }
         else if (gameControl.evaluation == _GameControl.EVALUATION.GOOD)
         {
-            baseSpeed = new Vector3(4, 10, 0);
+            groupSpeed = 10.0f;
+            groupAngle = -20.0f;
+            randSpeed = 3.0f;
         }
         else if (gameControl.evaluation == _GameControl.EVALUATION.GREAT)
         {
-            baseSpeed = new Vector3(8, 15, 0);
+            groupSpeed = 15.0f;
+            groupAngle = -40.0f;
+            randSpeed = 4.0f;
         }
-        baseSpeed.z += Random.Range(-10.0f, 10.0f);
-
+        groupSpeed *= Random.Range(0.8f, 1.2f);
         for (int i = 0; i < Onis.Length; i++)
         {
-            // 怪物击飞方向随机波动
-            Vector3 speed = baseSpeed;
-            speed *= Random.Range(0.8f, 1.2f);
-            speed += Onis[i].GetComponent<Rigidbody>().velocity;
+            Vector3 speed = Vector3.forward * randSpeed;
+            randAngle = Random.Range(0.0f, 360.0f);
+            speed = Quaternion.AngleAxis(randAngle, Vector3.up) * speed;
+            speed += groupSpeed * Vector3.up;
+            speed= Quaternion.AngleAxis(groupAngle, Vector3.forward) * speed;
             Onis[i].OnAttack(speed);
         }
     }

@@ -31,8 +31,8 @@ public class _LevelControl : MonoBehaviour {
     public float maxDispatchDampTime = 5.0f;            // 缓慢模式生成怪物的间隔时间
 
 
-    public int repeats=0;                               // 同一个模式下生成怪物的波数
-    public int curRepeat;                               // 当前波数
+    public int repeats = 0;     // 同一个模式下生成怪物的波数
+    public int curRepeat = 0;   // 当前波数
 	
 	void Update () {
         time += Time.deltaTime;
@@ -56,7 +56,7 @@ public class _LevelControl : MonoBehaviour {
                     else
                     {
                         curRepeat++;
-                        if (curRepeat > repeats)
+                        if (curRepeat >= repeats)
                             TurnGroupType();
                     }
                     break;
@@ -66,7 +66,7 @@ public class _LevelControl : MonoBehaviour {
                     CreateOniGroup(position, rapidSpeed, level, groupType);
                     dispatchTime += Random.Range(0, maxDispatchDampTime / 2);
                     curRepeat++;
-                    if (curRepeat > repeats)
+                    if (curRepeat >= repeats)
                         TurnGroupType();
                     break;
                 // 缓慢模式
@@ -75,7 +75,7 @@ public class _LevelControl : MonoBehaviour {
                     CreateOniGroup(position, slowSpeed, level, groupType);
                     dispatchTime += maxDispatchDampTime;
                     curRepeat++;
-                    if (curRepeat > repeats)
+                    if (curRepeat >= repeats)
                         TurnGroupType();
                     break;
                 // 赶超模式
@@ -86,7 +86,7 @@ public class _LevelControl : MonoBehaviour {
                     CreateOniGroup(position, passingSpeed, level, groupType);
                     dispatchTime += maxDispatchDampTime;
                     curRepeat++;
-                    if (curRepeat > repeats)
+                    if (curRepeat >= repeats)
                         TurnGroupType();
                     break;
                 // 加速-减速模式
@@ -95,7 +95,7 @@ public class _LevelControl : MonoBehaviour {
                     CreateOniGroup(position, slowSpeed, level, groupType);
                     dispatchTime += maxDispatchDampTime;
                     curRepeat++;
-                    if (curRepeat > repeats)
+                    if (curRepeat >= repeats)
                         TurnGroupType();
                     break;
             }
@@ -149,19 +149,19 @@ public class _LevelControl : MonoBehaviour {
             {
                 case 1:
                     groupType = GROUPTYPE.RAPID;
-                    repeats = Random.Range(2, 8);
+                    repeats = Random.Range(3, 8);
                     break;
                 case 2:
                     groupType = GROUPTYPE.SLOW;
-                    repeats = Random.Range(0, 3);
+                    repeats = Random.Range(1, 4);
                     break;
                 case 3:
                     groupType = GROUPTYPE.PASSING;
-                    repeats = Random.Range(0, 2);
+                    repeats = 1;
                     break;
                 case 4:
                     groupType = GROUPTYPE.DECELERATE;
-                    repeats = Random.Range(0, 2);
+                    repeats = 1;
                     break;
             }
 
@@ -169,7 +169,7 @@ public class _LevelControl : MonoBehaviour {
         else
         {
             groupType = GROUPTYPE.NORMAL;
-            repeats = Random.Range(1, 5);
+            repeats = Random.Range(1, 4);
         }
 
     }
@@ -177,6 +177,8 @@ public class _LevelControl : MonoBehaviour {
     public void ResetLevel()
     {
         level = 0;
+        curRepeat = 0;
+        repeats = 0;
         groupType = GROUPTYPE.NORMAL;
         dispatchTime += 5.0f;
     }

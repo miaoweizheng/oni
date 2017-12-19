@@ -14,11 +14,13 @@ public class _PlayerControl : MonoBehaviour {
     ATTACKMOTION                        attackMotion = ATTACKMOTION.LEFT;   // 攻击动作
     private _AttackColliderControl      attackColliderControl;              // 攻击触发器
 
-    public AudioSource  attackAudioSource;      // 角色攻击音频源
+    private AudioSource attackAudioSource;      // 角色攻击音频源
     public AudioClip[]  attackAudioClip;        // 角色攻击音频
-    private int attackAudioIndex = 0;           // 角色攻击音频索引
+    private int         attackAudioIndex = 0;   // 角色攻击音频索引
+    private AudioSource missAudioScource;       // 失误音频源
+    public AudioClip    missAudioClip;          // 失误音频
 
-    public AudioSource                  swordAudioSource;   // 剑斩击音频源
+    private AudioSource                 swordAudioSource;   // 剑斩击音频源
     public AudioClip                    swordAudioClip;     // 剑斩击音频
     public AudioClip                    swordHitAudioClip;  // 剑斩击命中音频
     public _AnimatedTextureExtendedUV   attackLeftAFX;      // 剑左手斩击特效
@@ -32,10 +34,14 @@ public class _PlayerControl : MonoBehaviour {
     public const float  ATTACK_TIME = 1.0f;                 // 攻击间隔时间
     public float        attackTimer = 0.0f;                 // 攻击间隔计时
 
-    public float       runSpeed;            // 速度
-    public const float maxSpeed = 20.0f;    // 最大速度
-    public const float speedAdd = 5.0f;     // 加速值 
-    public const float speedSub = 20.0f;    // 减速值
+    private AudioSource runAudioSource;         // 奔跑音频源
+    public AudioClip    runAudioClip;           // 奔跑音频
+    private const float runRateMin = 0.2f;      // 奔跑最小音调
+    private const float runRateMax = 0.5f;      // 奔跑最大音调
+    public float        runSpeed;               // 速度
+    public const float  maxSpeed = 20.0f;       // 最大速度
+    public const float  speedAdd = 5.0f;        // 加速值 
+    public const float  speedSub = 20.0f;       // 减速值
 
     // 奔跑状态
     enum RUNSTATE
@@ -52,12 +58,23 @@ public class _PlayerControl : MonoBehaviour {
     }
 
     void Start () {
+        // 添加并初始化音频源组件
         attackAudioSource = gameObject.AddComponent<AudioSource>();
+
+        runAudioSource = gameObject.AddComponent<AudioSource>();
+        runAudioSource.loop = true;
+        runAudioSource.clip = runAudioClip;
+        //runAudioSource.volume = 1.0f;
+        runAudioSource.Play();
+
+        missAudioScource = gameObject.AddComponent<AudioSource>();
+        missAudioScource.clip = missAudioClip;
+
         swordAudioSource = gameObject.AddComponent<AudioSource>();
 
-	}
-	
-	void Update () {
+    }
+
+    void Update () {
         // 设置速度
         if (runState == RUNSTATE.RUN)
             runSpeed += speedAdd * Time.deltaTime;  // 加速
@@ -65,7 +82,9 @@ public class _PlayerControl : MonoBehaviour {
             runSpeed -= speedSub * Time.deltaTime;  // 减速
         runSpeed = Mathf.Clamp(runSpeed, 0.0f, maxSpeed);
         GetComponent<Rigidbody>().velocity = runSpeed * Vector3.right;
-
+        // 根据速度设置奔跑音调
+        float runRate = runSpeed / maxSpeed;
+        runAudioSource.pitch = Mathf.Lerp(runRateMin, runRateMax, runRate);
 
         // 攻击
         AttackControl();
@@ -82,6 +101,7 @@ public class _PlayerControl : MonoBehaviour {
                 runSpeed = 0.0f;
                 gameControl.OnPlayerMissed();
             }
+            missAudioScource.Play();
         }
     }
 
@@ -108,7 +128,9 @@ public class _PlayerControl : MonoBehaviour {
             }
             charaAnimation.CrossFadeQueued("P_run");
 
-            // 切换斩击声音
+            swordAudioSource.PlayOneShot(swordAudioClip);   // 剑斩击音效
+
+            // 切换角色攻击音效
             attackAudioSource.PlayOneShot(attackAudioClip[attackAudioIndex]);
             attackAudioIndex = (attackAudioIndex + 1) % attackAudioClip.Length;
 
@@ -144,8 +166,12 @@ public class _PlayerControl : MonoBehaviour {
     /// <summary>
     /// 击中目标
     /// </summary>
-    public void AttackTheTarget()
+    /// <param name="position">击中位置</param>
+    public void AttackTheTarget(Vector3 position)
     {
         canAttack = true;
+        swordAudioSource.PlayOneShot(swordHitAudioClip);
+        hitAFX.transform.position = position;
+        hitAFX.Play();
     }
 }

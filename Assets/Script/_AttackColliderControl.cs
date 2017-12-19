@@ -23,7 +23,7 @@ public class _AttackColliderControl : MonoBehaviour {
             _OniGroupControl oniGroup = other.GetComponent<_OniGroupControl>();
             if (oniGroup.isAlive)
             {
-                Player.GetComponent<_PlayerControl>().AttackTheTarget();
+                Player.GetComponent<_PlayerControl>().AttackTheTarget(oniGroup.transform.position);
                 oniGroup.OnAttackedFromPlayer();
             }
         }

@@ -693,7 +693,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -792,6 +792,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   charaAnimation: {fileID: 0}
+  yarare:
+  - {fileID: 8300000, guid: 7dc48a51c41858e4f95a5a9878838296, type: 3}
+  - {fileID: 8300000, guid: 33490a18481966d4080ad73186abd6fb, type: 3}
+  - {fileID: 8300000, guid: e15f29e7b47660d499a836d980931690, type: 3}
+  - {fileID: 8300000, guid: cfc78a7ea43afd3459a3c258181833da, type: 3}
+  - {fileID: 8300000, guid: 206fb7f0805a2214fbc5c6e3e6b63489, type: 3}
+  - {fileID: 8300000, guid: 351ec84790424b64ba17e9c921566261, type: 3}
 --- !u!135 &135679121604895378
 SphereCollider:
   m_ObjectHideFlags: 1
