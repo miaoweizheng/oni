@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class _OniGroupControl : MonoBehaviour {
     public GameObject Player;                   // 角色对象
-    public _GameControl gameControl;            // 游戏管理脚本
+    //public _GameControl gameControl;            // 游戏管理脚本
     public GameObject[] OniPrefab;              // 怪物预制体
     public float runSpeed = 2.0f;               // 移动速度
     public float groupRange = 1.0f;             // 怪物生成的范围
@@ -35,7 +35,7 @@ public class _OniGroupControl : MonoBehaviour {
     private void Awake()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
-        gameControl = GameObject.FindGameObjectWithTag("GameController").GetComponent<_GameControl>();
+        //gameControl = GameObject.FindGameObjectWithTag("GameController").GetComponent<_GameControl>();
     }
 
 	
@@ -101,6 +101,7 @@ public class _OniGroupControl : MonoBehaviour {
     /// <param name="basePosition">怪物初始位置</param>
     public void CreateOnis(int num,Vector3 basePosition)
     {
+        basePosition.y--;
         if (OniPrefab == null) return;
         Onis = new _OniControl[num];
         for (int i = 0; i < num; i++)
@@ -162,11 +163,9 @@ public class _OniGroupControl : MonoBehaviour {
     /// <summary>
     /// 被击中
     /// </summary>
-    public void OnAttackedFromPlayer()
+    /// <param name="evaluation">击飞程度</param>
+    public void OnAttackedFromPlayer(_GameControl.EVALUATION evaluation)
     {
-        // 计算得分
-        gameControl.Scored(Onis.Length);
-
         isAlive = false;
         state = STATE.DEFEATED;
         GetComponent<BoxCollider>().enabled = false;
@@ -179,19 +178,19 @@ public class _OniGroupControl : MonoBehaviour {
         float groupAngle = 0.0f;    // 整体发射角度
         float randSpeed = 0.0f;     // 散开速度
         float randAngle = 0.0f;     // 散开角度
-        if (gameControl.evaluation== _GameControl.EVALUATION.OKAY)
+        if (evaluation== _GameControl.EVALUATION.OKAY)
         {
             groupSpeed = 10.0f;
             groupAngle = 20.0f;
             randSpeed = 2.0f;
         }
-        else if (gameControl.evaluation == _GameControl.EVALUATION.GOOD)
+        else if (evaluation == _GameControl.EVALUATION.GOOD)
         {
             groupSpeed = 10.0f;
             groupAngle = -20.0f;
             randSpeed = 3.0f;
         }
-        else if (gameControl.evaluation == _GameControl.EVALUATION.GREAT)
+        else if (evaluation == _GameControl.EVALUATION.GREAT)
         {
             groupSpeed = 15.0f;
             groupAngle = -40.0f;
@@ -210,12 +209,21 @@ public class _OniGroupControl : MonoBehaviour {
     }
 
     /// <summary>
-    /// 碰撞后离场
+    /// 怪物离场
     /// </summary>
     public void BeginLeave()
     {
         isAlive = false;
         GetComponent<BoxCollider>().enabled = false;
         state = STATE.LEAVE;
+    }
+
+    /// <summary>
+    /// 获取怪物数量
+    /// </summary>
+    /// <returns></returns>
+    public int GetCount()
+    {
+        return Onis.Length;
     }
 }

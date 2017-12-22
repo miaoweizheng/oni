@@ -6,6 +6,7 @@ public class _PlayerControl : MonoBehaviour {
 
     public _GameControl gameControl;                // 游戏管理脚本
     private Animation charaAnimation;               // 动画控件
+    private bool isPlaying = true;                  // 是否在游戏中
 
     /// <summary>
     /// 攻击动作
@@ -13,6 +14,7 @@ public class _PlayerControl : MonoBehaviour {
     private enum ATTACKMOTION { LEFT,RIGHT};
     ATTACKMOTION                        attackMotion = ATTACKMOTION.LEFT;   // 攻击动作
     private _AttackColliderControl      attackColliderControl;              // 攻击触发器
+    private bool isCombo = false;                                           // 是否连击
 
     private AudioSource attackAudioSource;      // 角色攻击音频源
     public AudioClip[]  attackAudioClip;        // 角色攻击音频
@@ -34,6 +36,7 @@ public class _PlayerControl : MonoBehaviour {
     public const float  ATTACK_TIME = 1.0f;                 // 攻击间隔时间
     public float        attackTimer = 0.0f;                 // 攻击间隔计时
 
+    public ParticleSystem runAFX;               // 奔跑特效
     private AudioSource runAudioSource;         // 奔跑音频源
     public AudioClip    runAudioClip;           // 奔跑音频
     private const float runRateMin = 0.2f;      // 奔跑最小音调
@@ -41,15 +44,15 @@ public class _PlayerControl : MonoBehaviour {
     public float        runSpeed;               // 速度
     public const float  maxSpeed = 20.0f;       // 最大速度
     public const float  speedAdd = 5.0f;        // 加速值 
-    public const float  speedSub = 20.0f;       // 减速值
+    public const float  speedSub = 4.0f;        // 减速值
 
     // 奔跑状态
-    enum RUNSTATE
+    public enum RUNSTATE
     {
         STOP,       // 停止
         RUN,        // 奔跑
     }
-    RUNSTATE runState = RUNSTATE.RUN;               // 奔跑状态
+    public RUNSTATE runState = RUNSTATE.RUN;               // 奔跑状态
 
     private void Awake()
     {
@@ -76,12 +79,21 @@ public class _PlayerControl : MonoBehaviour {
 
     void Update () {
         // 设置速度
+        Vector3 velocity = Vector3.zero;
         if (runState == RUNSTATE.RUN)
             runSpeed += speedAdd * Time.deltaTime;  // 加速
-        else if(runState==RUNSTATE.STOP)
+        else if (runState == RUNSTATE.STOP)
+        {
             runSpeed -= speedSub * Time.deltaTime;  // 减速
+            if (runSpeed < 0.0f && charaAnimation.IsPlaying("P_run"))
+            {
+                runAFX.Stop();
+                charaAnimation.Play("P_stop");
+            }
+        }
         runSpeed = Mathf.Clamp(runSpeed, 0.0f, maxSpeed);
-        GetComponent<Rigidbody>().velocity = runSpeed * Vector3.right;
+        velocity.x = runSpeed;
+        GetComponent<Rigidbody>().velocity = velocity;
         // 根据速度设置奔跑音调
         float runRate = runSpeed / maxSpeed;
         runAudioSource.pitch = Mathf.Lerp(runRateMin, runRateMax, runRate);
@@ -100,8 +112,12 @@ public class _PlayerControl : MonoBehaviour {
             {
                 runSpeed = 0.0f;
                 gameControl.OnPlayerMissed();
+                missAudioScource.Play();
+                charaAnimation.Play("P_yarare");
+                charaAnimation.CrossFadeQueued("P_run");
             }
-            missAudioScource.Play();
+
+
         }
     }
 
@@ -110,21 +126,32 @@ public class _PlayerControl : MonoBehaviour {
     /// </summary>
     private void AttackControl()
     {
+        if (!isPlaying) return;
+
         if (canAttack && Input.GetMouseButtonDown(0))
         {
-            // 左手斩击
-            if (attackMotion == ATTACKMOTION.LEFT)
+            // 连击
+            if (isCombo)
             {
-                charaAnimation.Play("P_attack_L");
-                attackLeftAFX.OnAttackAFX();
-                attackMotion = ATTACKMOTION.RIGHT;
-            }
-            // 右手斩击
-            else if (attackMotion == ATTACKMOTION.RIGHT)
-            {
-                charaAnimation.Play("P_attack_R");
+                charaAnimation.Play("P_attack_Rot");
                 attackRightAFX.OnAttackAFX();
-                attackMotion = ATTACKMOTION.LEFT;
+            }
+            else
+            {
+                // 左手斩击
+                if (attackMotion == ATTACKMOTION.LEFT)
+                {
+                    charaAnimation.Play("P_attack_L");
+                    attackLeftAFX.OnAttackAFX();
+                    attackMotion = ATTACKMOTION.RIGHT;
+                }
+                // 右手斩击
+                else if (attackMotion == ATTACKMOTION.RIGHT)
+                {
+                    charaAnimation.Play("P_attack_R");
+                    attackRightAFX.OnAttackAFX();
+                    attackMotion = ATTACKMOTION.LEFT;
+                }
             }
             charaAnimation.CrossFadeQueued("P_run");
 
@@ -150,7 +177,10 @@ public class _PlayerControl : MonoBehaviour {
         {
             attackTimer -= Time.deltaTime;
             if (attackTimer <= 0)
+            {
                 canAttack = true;
+                isCombo = false;
+            }
         }
     }
 
@@ -170,8 +200,19 @@ public class _PlayerControl : MonoBehaviour {
     public void AttackTheTarget(Vector3 position)
     {
         canAttack = true;
+        isCombo = true;
         swordAudioSource.PlayOneShot(swordHitAudioClip);
         hitAFX.transform.position = position;
         hitAFX.Play();
+    }
+
+    /// <summary>
+    /// 游戏结束
+    /// </summary>
+    public void GameEnd()
+    {
+        isPlaying = false;
+        runSpeed = 10.0f;
+        runState = _PlayerControl.RUNSTATE.STOP;
     }
 }
