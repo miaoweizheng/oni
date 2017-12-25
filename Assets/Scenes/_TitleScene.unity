@@ -271,7 +271,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1024, y: 768}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -304,8 +304,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 295569344}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 512, y: 384, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 386, y: 214.5, z: 0}
+  m_LocalScale: {x: 0.55859375, y: 0.55859375, z: 0.55859375}
   m_Children:
   - {fileID: 1196957945}
   - {fileID: 1960597953}
@@ -1148,8 +1148,10 @@ MonoBehaviour:
   hitAFX: {fileID: 131020528}
   attackDisableTimer: 0
   attackTimer: 0
+  runAFX: {fileID: 0}
   runAudioClip: {fileID: 8300000, guid: 316ff34188f5d6a43b8d93f3ca224e8b, type: 3}
   runSpeed: 0
+  runState: 1
 --- !u!1001 &1920489493
 Prefab:
   m_ObjectHideFlags: 0
@@ -1338,6 +1340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 1770495292}
+  gameControl: {fileID: 0}
 --- !u!1 &2100365602
 GameObject:
   m_ObjectHideFlags: 0
