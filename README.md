@@ -11,5 +11,6 @@
     
 -在限定时间内尽可能多地斩击怪物。
 
+#### 编译好地游戏在运行文件夹下
     
 ![最高得分截图](https://github.com/miaoweizheng/oni/blob/master/%E8%BF%90%E8%A1%8C/%E6%9C%80%E9%AB%98%E5%BE%97%E5%88%86.png)
